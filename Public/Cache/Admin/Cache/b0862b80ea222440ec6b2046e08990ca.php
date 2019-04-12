@@ -42,6 +42,48 @@ $(function() {
 		'fileTypeExts': '*.bmp;*.jpg;*.jpeg;*.gif;*.png'//文件格式限制
 
 	});
+	$('#video_image_upload').uploadify({
+		'formData'     : {
+			'timestamp' : '<?php echo ($_SERVER["REQUEST_TIME"]); ?>',
+			'token'     : '<?php echo (md5($_SERVER["REQUEST_TIME"])); ?>'
+		},
+		'onUploadSuccess' : function(file, data, response) {
+			$('#videoimage').val(data);
+			var url = $("#video").val();
+			var code = '<video class="lib-video" webkit-playsinline="webkit-playsinline" playsinline="playsinline" ' +
+					'poster="'+data+'" ' +
+					'src="'+url+'" ' +
+					'width="100%" height="auto" controls="controls" type="video/mp4"></video>'
+			$("#videoremark").html(code)
+		},
+		'swf'         : '__PUBLIC__/Assets/js/uploadify/uploadify.swf',
+		'uploader'    : '<?php echo U("Public/upload");?>',
+		'buttonImage' : '__PUBLIC__/Assets/js/uploadify/swfBnt.png',
+		'fileTypeExts': '*.bmp;*.jpg;*.jpeg;*.gif;*.png'//文件格式限制
+
+	});
+	$('#video_upload').uploadify({
+		'onUploadSuccess' : function(file, data, response) {
+			if (data.indexOf("/") > -1){
+				$('#video').val(data);
+			var poster = $("#videoimage").val();
+			var code = '<video class="lib-video" webkit-playsinline="webkit-playsinline" playsinline="playsinline" ' +
+					'poster="' + poster + '" ' +
+					'src="' + data + ' "' +
+					'width="100%" height="auto" controls="controls" type="video/mp4"></video>';
+			$("#videoremark").html(code)
+		}
+			else{
+				alert(data);
+			}
+		},
+		'fileSizeLimit':'100MB',
+		'swf'         : '__PUBLIC__/Assets/js/uploadify/uploadify.swf',
+		'uploader'    : '<?php echo U("Public/uploadVideo");?>',
+		'buttonImage' : '__PUBLIC__/Assets/js/uploadify/swfBnt.png',
+		'fileTypeExts': '*.mp4;*.mp3;'//文件格式限制
+
+	});
 });
 function upload(btn,input){
 	$(btn).uploadify({
@@ -181,6 +223,14 @@ function upload(btn,input){
 						</tr>
 
 						<tr>
+							<th>默认选中套餐：</th>
+							<td>
+								<input name="mealindex" type="text" class="ui-text" value="<?php echo ($info["mealindex"]); ?>" size="10" placeholder="1">
+								<span class="ui-validityshower-info">（默认为1）</span>
+							</td>
+						</tr>
+
+						<tr>
 							<th>倒计时：</th>
 							<td>
 								<input name="timer" type="text" class="ui-text" value="<?php echo ($info["timer"]); ?>" size="10">
@@ -199,7 +249,14 @@ function upload(btn,input){
                             <td>
                                 <input name="is_hot" type="checkbox" value="1" <?php if(!empty($info["is_hot"])): ?>checked="checked"<?php endif; ?>>
                             </td>
-                        </tr>
+              </tr>
+
+						<tr>
+							<th><?php echo lang('PPT_colon');?></th>
+							<td>
+								<input name="is_ppt" type="checkbox" value="1" <?php if(!empty($info["is_ppt"])): ?>checked="checked"<?php endif; ?>>
+							</td>
+						</tr>
                         
 						<tr>
                             <th><?php echo lang('pc_image_colon');?></th>
@@ -215,6 +272,56 @@ function upload(btn,input){
                                 <input id="file_upload_thumb" name="file_upload_thumb" type="file" multiple="true" value="<?php echo lang('upload');?>" onclick="upload('#file_upload_thumb','#thumb')">
                             </td>
                         </tr>
+
+						<tr>
+							<th><?php echo lang('PPT图片_colon');?></th>
+							<td>
+								<input name="pptimgs" type="text" class="ui-text" value="<?php echo ($info["pptimgs"]); ?>" size="80">
+								<span class="ui-validityshower-info">（每张图片用#号分开）</span>
+							</td>
+						</tr>
+
+
+						<tr>
+							<th><?php echo lang('视频图片_colon');?></th>
+							<td>
+								<input name="videoimage" id="videoimage" type="text" class="ui-text" value="<?php echo ($info["videoimage"]); ?>" size="80" style="float:left">
+								<input id="video_image_upload" name="video_image_upload" type="file" multiple="true" value="<?php echo lang('upload');?>" onclick="upload('#video_image_upload','#videoimage')">
+							</td>
+						</tr>
+
+						<tr>
+							<th><?php echo lang('视频文件_colon');?></th>
+							<td>
+								<input name="video" id="video" type="text" class="ui-text" value="<?php echo ($info["video"]); ?>" size="80" style="float:left">
+								<input id="video_upload" name="video_upload" type="file" multiple="true" value="<?php echo lang('upload');?>" onclick="upload('#video_upload','#video')">
+							</td>
+						</tr>
+
+						<tr>
+							<th><?php echo lang('视频代码_colon');?></th>
+							<td>
+								<textarea name="videoremark" id="videoremark" class="input-textarea" cols="125" rows="3"><?php echo ($info["videoremark"]); ?></textarea>
+							</td>
+						</tr>
+
+						<tr>
+							<th><?php echo lang('套餐标题开头_colon');?></th>
+							<td>
+								<input name="title_start" type="text" class="ui-text" value="<?php echo ($info["title_start"]); ?>" size="80">
+								<span class="ui-validityshower-info">（套餐标题开头：第/NO/***）</span>
+							</td>
+						</tr>
+
+						<tr>
+							<th><?php echo lang('套餐标题描述_colon');?></th>
+							<td>
+								<input name="title_remark" type="text" class="ui-text" value="<?php echo ($info["title_remark"]); ?>" size="80">
+								<span class="ui-validityshower-info">（套餐标题描述:组/件/套：****）</span>
+							</td>
+						</tr>
+
+
 						<tr>
                             <th><?php echo lang('brief_colon');?></th>
                             <td>
@@ -244,13 +351,15 @@ function upload(btn,input){
 						
 						
 						<?php $aliziConfig = S('aliziConfig');$payment = C('PAYMENT');$itemPayment=json_decode($info['payment']); ?>
-						<?php if(empty($aliziConfig["payment_global"])): ?><tr>
+
+						<tr>
                             <th><?php echo lang('payment_colon');?></th>
                             <td>
 								<?php if(is_array($payment)): $i = 0; $__LIST__ = $payment;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?><input type="checkbox" name="payment[]" value="<?php echo ($key); ?>" <?php if(in_array($key,$itemPayment)): ?>checked="checked"<?php endif; ?>>
 								<label class="ui-group-label"><?php echo ($vo["name"]); ?></label><?php endforeach; endif; else: echo "" ;endif; ?>
                             </td>
-                        </tr><?php endif; ?>
+            </tr>
+
 						
 						<tr>
                             <th><?php echo lang('附加内容_colon');?></th>
@@ -277,6 +386,23 @@ function upload(btn,input){
 								<span class="ui-validityshower-info">（选择自动发货，则用户支付后将自动发送内容）</span>
 							</td>
                         </tr>
+
+						<tr>
+							<th><?php echo lang('所属账户_colon');?></th>
+							<td>
+								<input name="account" type="text" class="ui-text" value="<?php echo ($info["account"]); ?>" size="80">
+								<span class="ui-validityshower-info">（不能为空）</span>
+							</td>
+						</tr>
+
+						<tr>
+							<th><?php echo lang('Facebook_colon');?></th>
+							<td>
+								<input name="facebook" type="text" class="ui-text" value="<?php echo ($info["facebook"]); ?>" size="80">
+								<span class="ui-validityshower-info">（不能为空）</span>
+							</td>
+						</tr>
+
 						<tr class="inform <?php if(!empty($info["is_auto_send"])): ?>show<?php endif; ?>">
                             <th><?php echo lang('发送内容_colon');?></th>
                             <td>

@@ -118,6 +118,7 @@ class ApiAction extends Action{
 
     public function getAliziPayment($sn,$payment_id=''){
         $item = getCache('Item',array('sn'=>$sn));
+
         $payment = C('PAYMENT');
         $paymentInfo=array(
             1=>array( 'info'=> preg_replace('/\r\n/', '',nl2br($this->aliziConfig['payOnDelivery_info'])), 'math'=>'+'.$this->aliziConfig['payOnDelivery_fee'] ),
@@ -126,11 +127,17 @@ class ApiAction extends Action{
             4=>array('info'=> preg_replace('/\r\n/', '',nl2br($this->aliziConfig['alipay_discount_info'])),'math'=>'*'.$this->aliziConfig['alipay_discount'],),
             5=>array('info'=> preg_replace('/\r\n/', '',nl2br($item['qrcode_pay_info'])),'math'=>'+0',),
             6=>array('info'=> preg_replace('/\r\n/', '',nl2br($this->aliziConfig['bankpay_info'])),'math'=>'+'.$this->aliziConfig['bankpay_discount'],),
+            7=>array('info'=> preg_replace('/\r\n/', '',nl2br($this->aliziConfig['heimao_info'])),'math'=>'+'.$this->aliziConfig['heimao_fee'],),
+            8=>array('info'=> preg_replace('/\r\n/', '',nl2br($this->aliziConfig['chaoshang_info'])),'math'=>'+'.$this->aliziConfig['chaoshang_fee'],),
+            9=>array('info'=> preg_replace('/\r\n/', '',nl2br($this->aliziConfig['quanjia_info'])),'math'=>'+'.$this->aliziConfig['quanjia_fee'],),
+            10=>array('info'=> preg_replace('/\r\n/', '',nl2br($this->aliziConfig['cashon_info'])),'math'=>'+'.$this->aliziConfig['cashon_fee'],),
         );
         foreach($payment as $k=>$v){
             $payment[$k] = array_merge($payment[$k],$paymentInfo[$k]);
         }
-        if($this->aliziConfig['payment_global']==1){
+        
+
+        if($this->aliziConfig['payment_global']==3){
             if(empty($this->aliziConfig['payOnDelivery_status'])) unset($payment[1]);
             if(empty($this->aliziConfig['bankpay_status'])) unset($payment[6]);
             if(empty($this->aliziConfig['alipay_status'])){

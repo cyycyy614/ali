@@ -579,6 +579,7 @@ class UploadFile {//类定义开始
 	 +----------------------------------------------------------
 	 */
 	private function checkSize($size) {
+
 		return !($size > $this->maxSize) || (-1 == $this->maxSize);
 	}
 

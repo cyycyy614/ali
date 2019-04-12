@@ -42,6 +42,48 @@ $(function() {
 		'fileTypeExts': '*.bmp;*.jpg;*.jpeg;*.gif;*.png'//文件格式限制
 
 	});
+	$('#video_image_upload').uploadify({
+		'formData'     : {
+			'timestamp' : '{$_SERVER["REQUEST_TIME"]}',
+			'token'     : '{$_SERVER["REQUEST_TIME"]|MD5}'
+		},
+		'onUploadSuccess' : function(file, data, response) {
+			$('#videoimage').val(data);
+			var url = $("#video").val();
+			var code = '<video class="lib-video" webkit-playsinline="webkit-playsinline" playsinline="playsinline" ' +
+					'poster="'+data+'" ' +
+					'src="'+url+'" ' +
+					'width="100%" height="auto" controls="controls" type="video/mp4"></video>'
+			$("#videoremark").html(code)
+		},
+		'swf'         : '__PUBLIC__/Assets/js/uploadify/uploadify.swf',
+		'uploader'    : '{:U("Public/upload")}',
+		'buttonImage' : '__PUBLIC__/Assets/js/uploadify/swfBnt.png',
+		'fileTypeExts': '*.bmp;*.jpg;*.jpeg;*.gif;*.png'//文件格式限制
+
+	});
+	$('#video_upload').uploadify({
+		'onUploadSuccess' : function(file, data, response) {
+			if (data.indexOf("/") > -1){
+				$('#video').val(data);
+			var poster = $("#videoimage").val();
+			var code = '<video class="lib-video" webkit-playsinline="webkit-playsinline" playsinline="playsinline" ' +
+					'poster="' + poster + '" ' +
+					'src="' + data + ' "' +
+					'width="100%" height="auto" controls="controls" type="video/mp4"></video>';
+			$("#videoremark").html(code)
+		}
+			else{
+				alert(data);
+			}
+		},
+		'fileSizeLimit':'100MB',
+		'swf'         : '__PUBLIC__/Assets/js/uploadify/uploadify.swf',
+		'uploader'    : '{:U("Public/uploadVideo")}',
+		'buttonImage' : '__PUBLIC__/Assets/js/uploadify/swfBnt.png',
+		'fileTypeExts': '*.mp4;*.mp3;'//文件格式限制
+
+	});
 });
 function upload(btn,input){
 	$(btn).uploadify({
@@ -197,6 +239,14 @@ function upload(btn,input){
 						</tr>
 
 						<tr>
+							<th>默认选中套餐：</th>
+							<td>
+								<input name="mealindex" type="text" class="ui-text" value="{$info.mealindex}" size="10" placeholder="1">
+								<span class="ui-validityshower-info">（默认为1）</span>
+							</td>
+						</tr>
+
+						<tr>
 							<th>倒计时：</th>
 							<td>
 								<input name="timer" type="text" class="ui-text" value="{$info.timer}" size="10">
@@ -215,7 +265,14 @@ function upload(btn,input){
                             <td>
                                 <input name="is_hot" type="checkbox" value="1" <notempty name="info.is_hot">checked="checked"</notempty>>
                             </td>
-                        </tr>
+              </tr>
+
+						<tr>
+							<th>{:lang('PPT_colon')}</th>
+							<td>
+								<input name="is_ppt" type="checkbox" value="1" <notempty name="info.is_ppt">checked="checked"</notempty>>
+							</td>
+						</tr>
                         
 						<tr>
                             <th>{:lang('pc_image_colon')}</th>
@@ -231,6 +288,56 @@ function upload(btn,input){
                                 <input id="file_upload_thumb" name="file_upload_thumb" type="file" multiple="true" value="{:lang('upload')}" onclick="upload('#file_upload_thumb','#thumb')">
                             </td>
                         </tr>
+
+						<tr>
+							<th>{:lang('PPT图片_colon')}</th>
+							<td>
+								<input name="pptimgs" type="text" class="ui-text" value="{$info.pptimgs}" size="80">
+								<span class="ui-validityshower-info">（每张图片用#号分开）</span>
+							</td>
+						</tr>
+
+
+						<tr>
+							<th>{:lang('视频图片_colon')}</th>
+							<td>
+								<input name="videoimage" id="videoimage" type="text" class="ui-text" value="{$info.videoimage}" size="80" style="float:left">
+								<input id="video_image_upload" name="video_image_upload" type="file" multiple="true" value="{:lang('upload')}" onclick="upload('#video_image_upload','#videoimage')">
+							</td>
+						</tr>
+
+						<tr>
+							<th>{:lang('视频文件_colon')}</th>
+							<td>
+								<input name="video" id="video" type="text" class="ui-text" value="{$info.video}" size="80" style="float:left">
+								<input id="video_upload" name="video_upload" type="file" multiple="true" value="{:lang('upload')}" onclick="upload('#video_upload','#video')">
+							</td>
+						</tr>
+
+						<tr>
+							<th>{:lang('视频代码_colon')}</th>
+							<td>
+								<textarea name="videoremark" id="videoremark" class="input-textarea" cols="125" rows="3">{$info.videoremark}</textarea>
+							</td>
+						</tr>
+
+						<tr>
+							<th>{:lang('套餐标题开头_colon')}</th>
+							<td>
+								<input name="title_start" type="text" class="ui-text" value="{$info.title_start}" size="80">
+								<span class="ui-validityshower-info">（套餐标题开头：第/NO/***）</span>
+							</td>
+						</tr>
+
+						<tr>
+							<th>{:lang('套餐标题描述_colon')}</th>
+							<td>
+								<input name="title_remark" type="text" class="ui-text" value="{$info.title_remark}" size="80">
+								<span class="ui-validityshower-info">（套餐标题描述:组/件/套：****）</span>
+							</td>
+						</tr>
+
+
 						<tr>
                             <th>{:lang('brief_colon')}</th>
                             <td>
@@ -260,7 +367,7 @@ function upload(btn,input){
 						
 						
 						<php>$aliziConfig = S('aliziConfig');$payment = C('PAYMENT');$itemPayment=json_decode($info['payment']);</php>
-						<empty name="aliziConfig.payment_global">
+
 						<tr>
                             <th>{:lang('payment_colon')}</th>
                             <td>
@@ -269,8 +376,8 @@ function upload(btn,input){
 								<label class="ui-group-label">{$vo.name}</label>
 								</volist>
                             </td>
-                        </tr>
-						</empty>
+            </tr>
+
 						
 						<tr>
                             <th>{:lang('附加内容_colon')}</th>
@@ -299,6 +406,23 @@ function upload(btn,input){
 								<span class="ui-validityshower-info">（选择自动发货，则用户支付后将自动发送内容）</span>
 							</td>
                         </tr>
+
+						<tr>
+							<th>{:lang('所属账户_colon')}</th>
+							<td>
+								<input name="account" type="text" class="ui-text" value="{$info.account}" size="80">
+								<span class="ui-validityshower-info">（不能为空）</span>
+							</td>
+						</tr>
+
+						<tr>
+							<th>{:lang('Facebook_colon')}</th>
+							<td>
+								<input name="facebook" type="text" class="ui-text" value="{$info.facebook}" size="80">
+								<span class="ui-validityshower-info">（不能为空）</span>
+							</td>
+						</tr>
+
 						<tr class="inform <notempty name="info.is_auto_send">show</notempty>">
                             <th>{:lang('发送内容_colon')}</th>
                             <td>

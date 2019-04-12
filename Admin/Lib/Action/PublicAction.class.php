@@ -75,6 +75,42 @@ class PublicAction extends Action {
         	die($info);
         }
 	}
+
+	public function uploadVideo($return=false){
+		import("ORG.Util.UploadFile");
+		$folder = date('Ym');//用“年-月”来命名图片文件夹名称
+		$upload = new UploadFile();
+		$upload->maxSize   = -1;//设置上传文件大小
+		$upload->saveRule  = uniqid; //设置上传文件规则
+		$upload->savePath  = './Public/Uploads/'.$folder.'/';//设置附件上传目录
+		$upload->allowExts = explode(',', 'mp4,mp3,swf');//设置上传文件类型
+
+		$upload->thumbRemoveOrigin = false; //删除原图
+		$upload->thumb = false; //设置需要生成缩略图，仅对图像文件有效
+		$upload->imageClassPath = 'ORG.Util.Image'; //设置引用图片类库包路径
+		$upload->thumbPrefix = ''; //设置需要生成缩略图的文件前缀
+		$upload->thumbSuffix = ''; //设置需要生成缩略图的文件后缀
+		$upload->thumbPath = ''; //缩略图的保存路径，留空的话取文件上传目录本身
+		$upload->subType = 'date'; //子目录创建方式，默认为hash，可以设置为hash或者date
+		$upload->thumbMaxWidth = '200';//设置缩略图最大宽度
+		$upload->thumbMaxHeight = '200'; //设置缩略图最大高度
+
+		if(!$upload->upload()) {
+			$info = $upload->getErrorMsg();
+		}else{
+			$uploadList = $upload->getUploadFileInfo();//取得成功上传的文件信息
+			foreach($uploadList as $k=>$v){
+				$_POST['image'][$k] = '/'.$folder.'/'.$v['savename'];
+			}
+			$info = $_POST['image'][0];
+		}
+		if($return==true){
+			return $info;
+		}else{
+			die($info);
+		}
+	}
+
 	public function keUpload(){
 		$image = $this->upload(true);
 		echo json_encode(array('error'=>0,'url'=>$image));

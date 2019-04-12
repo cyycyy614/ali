@@ -2,6 +2,11 @@
 $url = "http://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
 $show_notice = $template['show_notice']<2?'alizi-full-row':'';
 $user_id = isset($_SESSION['member']['id'])?$_SESSION['member']['id']:$_GET['uid'];
+$mealindex = $info['mealindex'];
+
+$curCNum = 0;
+$titleStart = !!$info['title_start'] ? $info['title_start'] : "第";
+$titleRemark = !!$info['title_remark'] ? $info['title_remark'] :"套套餐";
 echo "<div class='alizi-order alizi-theme-".($template['template']?$template['template']:'thin')." alizi-lang-".C('DEFAULT_LANG')." alizi-border clearfix' id='aliziOrder'>",
 	"<div class='alizi-main alizi-border {$show_notice}'>",
 		"<div class='alizi-title alizi-border ellipsis'><i class='icon-cart'></i>{$info['name']}</div>";
@@ -39,9 +44,21 @@ echo "<div class='alizi-order alizi-theme-".($template['template']?$template['te
 							break;
 							default:
 								$i=0;
+
 								foreach($product as $vo){
+									$isactive = 0;
+									if($mealindex < 1){
+										if($i == 0 && !$curCNum){
+											$curCNum = !!$vo['cnum'] ? $vo['cnum'] : 0;
+											$isactive = 1;
+										}
+									}else if( $mealindex == ($i+1)){
+										$curCNum = !!$vo['cnum'] ? $vo['cnum'] : 0;
+										$isactive = 1;
+									}
+
 									$i++;
-									echo "<label alizi-value='{$vo['price']}' alizi-target='#item_price' alizi-fx='alizi.quantity' alizi-fx-params='0' class='".($vo['image']?' alizi-params-image':'')." ellipsis alizi-params ".($i==1?' active ':'')."' title='{$vo['title']}'>";
+									echo "<label alizi-value='{$vo['price']}' alizi-cnum='{$vo['cnum']}'  alizi-target='#item_price' alizi-fx='alizi.quantity' alizi-fx-params='0' class='".($vo['image']?' alizi-params-image':'')." ellipsis alizi-params ".($isactive==1?' active ':'')."' title='{$vo['title']}'>";
 									if($vo['image']){
 										echo "<p class='item-image'><img src='".imageUrl($vo['image'])."' /></p>";
 									}
@@ -51,11 +68,132 @@ echo "<div class='alizi-order alizi-theme-".($template['template']?$template['te
 						}
 					echo "</div></div>";
 				}
+
+//        echo '$curCNum:'.$curCNum;
+        //生成模版
+				if(!empty($colors)){
+					$title = "$titleStart<span class='item-row-color-num'>" . ($count + 1) ."</span>$titleRemark" ." 【顔色】";
+				
+					echo "<div id='colorRowTemplate' data-curnum= $curCNum class='alizi-rows clearfix rows-id-colors hidden'><label class='rows-head single'>".$title.lang('request')."</label><div class='rows-params'>";
+					foreach($colors as $k=>$vo){
+						//if($vo['type']=='text'){continue;}
+						switch ($vo['type']) {
+							case 'text':
+								echo "<input type='text' name='extends[{$vo['title']}]' placeholder='{$vo['value']}' autocomplete='off' class='alizi-input-text'>";
+								break;
+							case 'select':
+								echo "<select name='extends[{$vo['title']}]'>";
+								foreach(explode('#',$vo['value']) as $li){
+									if(empty($li)){
+										echo "<option value=''>".lang('pleaseSelect')."</option>";
+									}else{
+										echo "<option value='{$li}'>{$li}</option>";
+									}
+								}
+								echo "</select>";
+								break;
+							default:
+								echo "<label alizi-value='{$vo['title']}'  class='".(!!$vo['value']?' alizi-params-image':'')." ellipsis alizi-params ".($k==0?' active ':'')."' title='{$vo['title']}'>";
+								if(!!$vo['value']){
+									echo "<p class='item-image item-image-bg' style='background-image:url(".imageUrl($vo['value'])."); '></p>";
+								}
+								echo "<input type='radio' class='extends-input' name='colors[{$vo['title']}]' value='{$vo['title']}' ".($k==0?'checked':'').">{$vo['title']}</label>";
+				
+								break;
+						}
+					}
+					echo "</div></div>";
+				}
 				
 				if(!empty($extends)){
+					$title = "$titleStart<span class='item-row-extend-num'>" . ($count + 1) ."</span>$titleRemark" ." 【尺寸】";
+				
+					echo "<div id='extendRowTemplate' data-curnum= $curCNum class='alizi-rows clearfix rows-id-extends  hidden'><label class='rows-head single'>".$title.lang('request')."</label><div class='rows-params'>";
 					foreach($extends as $k=>$vo){
 						//if($vo['type']=='text'){continue;}
-							echo "<div class='alizi-rows clearfix rows-id-extends'><label class='rows-head'>{$vo['title']}".lang('request')."</label><div class='rows-params'>";
+						switch ($vo['type']) {
+							case 'text':
+								echo "<input type='text' name='extends[{$vo['title']}]' placeholder='{$vo['value']}' autocomplete='off' class='alizi-input-text'>";
+								break;
+							case 'select':
+								echo "<select name='extends[{$vo['title']}]'>";
+								foreach(explode('#',$vo['value']) as $li){
+									if(empty($li)){
+										echo "<option value=''>".lang('pleaseSelect')."</option>";
+									}else{
+										echo "<option value='{$li}'>{$li}</option>";
+									}
+								}
+								echo "</select>";
+								break;
+							case 'checkbox1':
+								$i=0;
+								foreach(explode('#',$vo['value']) as $li){
+									$i++;
+									$hidden = empty($li)?'style="display:none;"':'';
+									echo "<label class='alizi-group alizi-params alizi-{$vo['type']} ".($i==1?'active':'')."' {$hidden}><span class='alizi-group-box'>",
+										"<input alizi-value='{$li}' id='{$vo['title']}{$key}' name='extends[{$vo['title']}]".($vo['type']=='checkbox'?'[]':'')."' type='{$vo['type']}' value='{$li}' ".($i==1?'checked':'').">",
+									"<label class='selected-icon' for='{$vo['title']}{$key}'></label></span>{$li}</label>";
+								}
+								break;
+							default:
+								echo "<label alizi-value='{$vo['value']}'  class='".(!!$vo['image']?' alizi-params-image':'')." ellipsis alizi-params ".($k==0?' active ':'')."' title='{$vo['title']}'>";
+								if(!!$vo['image']){
+									echo "<p class='item-image'><img src='".imageUrl($vo['image'])."' /></p>";
+								}
+								echo "<input type='radio' class='extends-input' name='extend[{$vo['value']}]' value='{$vo['value']}' ".($k==0?'checked':'').">{$vo['title']}</label>";
+				
+								break;
+						}
+					}
+					echo "</div></div>";
+				}
+
+         echo "<div id='alizi-box-prop'>";
+
+        for($count = 0; $count < $curCNum;$count++){
+
+         
+				if(!empty($colors)){
+					$title = "$titleStart<span class='item-row-color-num'>" . ($count + 1) ."</span>$titleRemark" ." 【顔色】";
+
+					echo "<div data-curnum= $curCNum class='alizi-rows clearfix rows-id-colors'><label class='rows-head single'>".$title.lang('request')."</label><div class='rows-params'>";
+					foreach($colors as $k=>$vo){
+						//if($vo['type']=='text'){continue;}
+						switch ($vo['type']) {
+							case 'text':
+								echo "<input type='text' name='extends[{$vo['title']}]' placeholder='{$vo['value']}' autocomplete='off' class='alizi-input-text'>";
+								break;
+							case 'select':
+								echo "<select name='extends[{$vo['title']}]'>";
+								foreach(explode('#',$vo['value']) as $li){
+									if(empty($li)){
+										echo "<option value=''>".lang('pleaseSelect')."</option>";
+									}else{
+										echo "<option value='{$li}'>{$li}</option>";
+									}
+								}
+								echo "</select>";
+								break;
+							default:
+								echo "<label alizi-value='{$vo['title']}'  class='".(!!$vo['value']?' alizi-params-image':'')." ellipsis alizi-params ".($k==0?' active ':'')."' title='{$vo['title']}'>";
+								if(!!$vo['value']){
+									echo "<p class='item-image item-image-bg' style='background-image:url(".imageUrl($vo['value'])."); '></p>";
+								}
+								echo "<input type='radio' class='extends-input' name='colors[{$vo['title']}]' value='{$vo['title']}' ".($k==0?'checked':'').">{$vo['title']}</label>";
+
+								break;
+						}
+					}
+					echo "</div></div>";
+				}
+				
+				if(!empty($extends)){
+					$title = "$titleStart<span class='item-row-extend-num'>" . ($count + 1) ."</span>$titleRemark" ." 【尺寸】";
+
+					echo "<div data-curnum= $curCNum class='alizi-rows clearfix rows-id-extends'><label class='rows-head single'>".$title.lang('request')."</label><div class='rows-params'>";
+					foreach($extends as $k=>$vo){
+						//if($vo['type']=='text'){continue;}
 							switch ($vo['type']) {
 								case 'text':
 									echo "<input type='text' name='extends[{$vo['title']}]' placeholder='{$vo['value']}' autocomplete='off' class='alizi-input-text'>";
@@ -71,7 +209,7 @@ echo "<div class='alizi-order alizi-theme-".($template['template']?$template['te
 										}
 									echo "</select>";
 								break;
-								default:
+								case 'checkbox1':
 									$i=0;
 									foreach(explode('#',$vo['value']) as $li){
 										$i++;
@@ -81,10 +219,22 @@ echo "<div class='alizi-order alizi-theme-".($template['template']?$template['te
 										"<label class='selected-icon' for='{$vo['title']}{$key}'></label></span>{$li}</label>";
 									}
 								break;
+								default:
+									echo "<label alizi-value='{$vo['value']}'  class='".(!!$vo['image']?' alizi-params-image':'')." ellipsis alizi-params ".($k==0?' active ':'')."' title='{$vo['title']}'>";
+									if(!!$vo['image']){
+										echo "<p class='item-image'><img src='".imageUrl($vo['image'])."' /></p>";
+									}
+									echo "<input type='radio' class='extends-input' name='extend[{$vo['value']}]' value='{$vo['value']}' ".($k==0?'checked':'').">{$vo['title']}</label>";
+
+									break;
 							}
-						echo "</div></div>";	
-					}		
+					}
+					echo "</div></div>";
 				}
+
+				}
+        echo "</div>";
+
 				if($params['quantity']['checked']==false){
 					echo "</div><!--.alizi-box--><div class='alizi-box' id='alizi-box-2'>";
 				}

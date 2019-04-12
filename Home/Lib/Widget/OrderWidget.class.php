@@ -23,6 +23,7 @@ class OrderWidget extends Widget
 			$template = getCache('ItemTemplate',array('id'=>$info['id']),true);
 			if(empty($template))$template['options'] = $aliziConfig['order_options'];
 			$template['extend'] = json_decode($template['extend'],true);
+			$template['colors'] = json_decode($template['colors'],true);
 		}
 		if(!empty($request['template'])) $template = array_merge($template,$request['template']);
 
@@ -30,6 +31,7 @@ class OrderWidget extends Widget
 			'params'=>$Alizi->getItemParams($template['options'],$request['options']),
 			'product'=>json_decode($info['params'],true),
 			'extends'=>json_decode($info['extends'],true),
+			'colors'=>json_decode($info['colors'],true),
 			'payment'=>$Alizi->getAliziPayment($sn),
 			'aliziConfig'=>$aliziConfig,
 			'cookie'=>$cookie,

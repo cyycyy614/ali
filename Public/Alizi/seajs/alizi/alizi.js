@@ -46,6 +46,7 @@ define(function(require, exports, module) {
 		
 		var data = paymentData[payment];
 		var count = math.substr(0,1),fee=parseFloat(math.substr(1));
+		fee = isNaN(fee) ? 0 : fee;
 		var totalPrice = count=='+'?(price*totalNum+fee):(price*totalNum*fee);//订单总价
 		var shippingCost = shipping(totalNum,totalPrice);//运费
 		var subTotal=totalPrice+shippingCost;
@@ -117,7 +118,7 @@ define(function(require, exports, module) {
 		}
 	}
 	
-	$('.alizi-params').bind('click',function(){
+	$('.alizi-box').on('click','.alizi-params',function(){
 		var _this = $(this),className='active';
 		var target = _this.attr('alizi-target'),value = _this.attr('alizi-value'),fx = _this.attr('alizi-fx'),params = _this.attr('alizi-fx-params');
 		
@@ -140,6 +141,28 @@ define(function(require, exports, module) {
 			}
 			if(fx)eval(fx+'("'+params+'")');
 		}
+	})
+
+	$('.rows-id-params .alizi-params').bind('click',function(){
+		var _this = $(this),className='active';
+		var target = _this.attr('alizi-target'),value = _this.attr('alizi-value'),fx = _this.attr('alizi-fx'),cnum = _this.attr('alizi-cnum'),params = _this.attr('alizi-fx-params');
+
+		 if(!!cnum){
+			 var colorRowTemplate = $("#colorRowTemplate");
+			 var extendRowTemplate = $("#extendRowTemplate");
+			 var contaier = $("#alizi-box-prop");
+			 contaier.empty()
+
+			 for(var count=0;count < cnum; count++){
+				  var citem = colorRowTemplate.clone(true)
+				  var eitem = extendRowTemplate.clone(true)
+				 $(citem).removeClass("hidden").find(".item-row-color-num").html(count + 1);
+				 $(eitem).removeClass("hidden").find(".item-row-extend-num").html(count + 1);
+				 contaier.append($(citem)[0].outerHTML)
+				 contaier.append($(eitem)[0].outerHTML)
+			 }
+		 }
+
 	})
 
 

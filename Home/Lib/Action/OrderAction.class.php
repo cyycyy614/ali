@@ -36,8 +36,9 @@ class OrderAction extends AliziAction {
         $info  = getCache('Item',array('sn'=>$id));
         if(empty($info) || $info['is_delete']==1) $this->error(lang('empty_item'));
         $template  = getCache('ItemTemplate',array('id'=>$info['id']),true);
+
         $template['extend'] = unserialize($template['extend']);
-        $template['color'] = json_decode($template['color'],true);
+        $template['colors'] = json_decode($info['colors'],true);
         if(isset($_GET['theme'])) $template['template']=str_replace('-', '/', $_GET['theme']);
 
         if(!empty($template) && preg_match('/^(Alizi\/)/i', $template['template'])){

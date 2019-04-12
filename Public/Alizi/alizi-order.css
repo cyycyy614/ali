@@ -199,3 +199,45 @@ textarea.alizi-input-text{height:auto !important;}
 .alizi-detail-content h2{height: 40px;line-height: 40px;border-bottom: 1px #eee solid;background: url(vline.jpg) no-repeat 15px center;padding-left: 27px;font-size:14px;border-top:10px solid #eee}
 .aliziAlert{position: relative;padding:5px 10px;text-align:center;text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);background-color: #fcf8e3;border: 1px solid #fbeed5;-webkit-border-radius: 4px;-moz-border-radius: 4px;border-radius: 4px;color: #f60;}
 .aliziAlert .close{position:absolute;top: 5px;right: 5px;line-height: 18px;}
+
+.alizi-theme-thin .alizi-rows .rows-head{
+  width: 100%;
+  text-align: left;
+  position: relative;
+}
+.rows-id-extends .alizi-params input.extends-input{
+  display: none;
+}
+.alizi-rows .rows-params,
+.rows-id-colors .rows-params{
+  margin-left: 10px;
+}
+.alizi-params .item-image.item-image-bg{
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 100%;
+  padding-top: 100%;
+  border: 1px solid #eeeeee;
+
+}
+.rows-id-extends.hidden,
+.rows-id-colors.hidden{
+  display: none;
+}
+
+.alizi-detail-content .wttl h2{    /* border-top: 10px solid #eee; */
+  background: url(ttlbg.png) center no-repeat;
+  background-size: 100% 100%;
+  display: inline-block;
+  color: white;
+  border-top:0 none;
+}
+.videoTitle{
+  background: url(ttlbg.png) center no-repeat;
+  background-size: 100% 100%;
+  display: inline-block;
+  color: white;
+  border-top:0 none;
+  padding: 10px 20px;
+}

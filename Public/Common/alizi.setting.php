@@ -41,10 +41,26 @@ return array(
 		),
 
 		'payment_setting' => array(
-			'payment_global'=> array('name'=>'全站通用','value'=>1,'options'=>array('1'=>'是','0'=>'否',),'tags'=>'select','decription'=>'非全站通用，可单独对某个产品设置支付方式','width'=>35,'height'=>0,'separator'=>0,),
+			'payment_global'=> array('name'=>'全站通用','value'=>0,'options'=>array('1'=>'是','0'=>'否',),'tags'=>'select','decription'=>'非全站通用，可单独对某个产品设置支付方式','width'=>35,'height'=>0,'separator'=>0,),
 			'payOnDelivery_status'=> array('name'=>'货到付款','options'=>array('1'=>'启用','0'=>'关闭',),'tags'=>'radio','decription'=>'','width'=>35,'height'=>0,'separator'=>0,),
 			'payOnDelivery_fee'=> array('name'=>'到付额外费用','value'=>0,'options'=>'','tags'=>'text','decription'=>'元（选择货到付款需客户补交费用。0则不需要）','width'=>5,'height'=>0,'separator'=>0,),
 			'payOnDelivery_info'=> array('name'=>'选择到付时提示','options'=>'','tags'=>'textarea','decription'=>'选择货到付款时的提示文字，这里为空则不提示','width'=>50,'height'=>3,'separator'=>1,),
+
+			'heimao_status'=> array('name'=>'黑猫/新竹(货到付款)','options'=>array('1'=>'启用','0'=>'关闭',),'tags'=>'radio','decription'=>'','width'=>35,'height'=>0,'separator'=>0,),
+			'heimao_fee'=> array('name'=>'到付额外费用','value'=>0,'options'=>'','tags'=>'text','decription'=>'元（选择货到付款需客户补交费用。0则不需要）','width'=>5,'height'=>0,'separator'=>0,),
+			'heimao_info'=> array('name'=>'选择到付时提示','options'=>'','tags'=>'textarea','decription'=>'选择货到付款时的提示文字，这里为空则不提示','width'=>50,'height'=>3,'separator'=>1,),
+
+			'chaoshang_status'=> array('name'=>'7-11超商取货(货到付款)','options'=>array('1'=>'启用','0'=>'关闭',),'tags'=>'radio','decription'=>'','width'=>35,'height'=>0,'separator'=>0,),
+			'chaoshang_fee'=> array('name'=>'到付额外费用','value'=>0,'options'=>'','tags'=>'text','decription'=>'元（选择货到付款需客户补交费用。0则不需要）','width'=>5,'height'=>0,'separator'=>0,),
+			'chaoshang_info'=> array('name'=>'选择到付时提示','options'=>'','tags'=>'textarea','decription'=>'选择货到付款时的提示文字，这里为空则不提示','width'=>50,'height'=>3,'separator'=>1,),
+
+			'quanjia_status'=> array('name'=>'全家取货(货到付款)','options'=>array('1'=>'启用','0'=>'关闭',),'tags'=>'radio','decription'=>'','width'=>35,'height'=>0,'separator'=>0,),
+			'quanjia_fee'=> array('name'=>'到付额外费用','value'=>0,'options'=>'','tags'=>'text','decription'=>'元（选择货到付款需客户补交费用。0则不需要）','width'=>5,'height'=>0,'separator'=>0,),
+			'quanjia_info'=> array('name'=>'选择到付时提示','options'=>'','tags'=>'textarea','decription'=>'选择货到付款时的提示文字，这里为空则不提示','width'=>50,'height'=>3,'separator'=>1,),
+
+			'cashon_status'=> array('name'=>'Cash on delivery','options'=>array('1'=>'启用','0'=>'关闭',),'tags'=>'radio','decription'=>'','width'=>35,'height'=>0,'separator'=>0,),
+			'cashon_fee'=> array('name'=>'到付额外费用','value'=>0,'options'=>'','tags'=>'text','decription'=>'元（选择货到付款需客户补交费用。0则不需要）','width'=>5,'height'=>0,'separator'=>0,),
+			'cashon_info'=> array('name'=>'选择到付时提示','options'=>'','tags'=>'textarea','decription'=>'选择货到付款时的提示文字，这里为空则不提示','width'=>50,'height'=>3,'separator'=>1,),
 
 			'bankpay_status'=> array('name'=>'银行转账','options'=>array('1'=>'启用','0'=>'关闭',),'tags'=>'radio','decription'=>'','width'=>35,'height'=>0,'separator'=>0,),
 			'bankpay_discount'=> array('name'=>'享受折扣','value'=>0,'options'=>'','tags'=>'text','decription'=>'元（选择银行转账需客户补交费用。0则不需要，负数则减免）','width'=>5,'height'=>0,'separator'=>0,),

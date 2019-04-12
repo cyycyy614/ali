@@ -364,7 +364,7 @@ INSERT INTO `alizi_setting` (`name`, `value`) VALUES
 ('item_category_id', '1,2'),
 ('show_header', '1'),
 ('show_bottom_nav', '1'),
-('payment_global', '1'),
+('payment_global', '0'),
 ('payOnDelivery_status', '1'),
 ('payOnDelivery_fee', '0'),
 ('payOnDelivery_info', '选择货到付款，安全放心'),
@@ -615,3 +615,12 @@ ALTER TABLE `alizi_user`
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+ALTER TABLE `alizi_item` add column mealindex int null DEFAULT 1  COMMENT '默认选中套餐，默认为1' after colors ;
+ALTER TABLE `alizi_item` add column is_ppt int null DEFAULT 0  COMMENT '是否ppt'  after is_hot;
+ALTER TABLE `alizi_item` add column pptimgs text null   COMMENT 'ppt轮播图' after colors ;
+ALTER TABLE `alizi_item` add column videoimage varchar(255) null DEFAULT '' COMMENT '视频图片' after pptimgs ;
+ALTER TABLE `alizi_item` add column video varchar(255) null  DEFAULT ''  COMMENT '视频url' after videoimage;
+ALTER TABLE `alizi_item` add column videoremark varchar(2000) null  DEFAULT ''  COMMENT '视频代码' after video;
+ALTER TABLE `alizi_item` add column title_start varchar(255) null  DEFAULT ''  COMMENT '套餐标题开头' after video;
+ALTER TABLE `alizi_item` add column title_remark varchar(255) null  DEFAULT ''  COMMENT '套餐标题描述' after title_start;
