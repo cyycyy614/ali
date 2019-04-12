@@ -49,10 +49,11 @@ $(function() {
 		},
 		'onUploadSuccess' : function(file, data, response) {
 			$('#videoimage').val(data);
+			var imgprefix = "__PUBLIC__/Uploads"
 			var url = $("#video").val();
 			var code = '<video class="lib-video" webkit-playsinline="webkit-playsinline" playsinline="playsinline" ' +
-					'poster="'+data+'" ' +
-					'src="'+url+'" ' +
+					'poster="'+(!!data ?(imgprefix+data):"")+'" ' +
+					'src="'+(!!url ? (imgprefix+url):"")+'" ' +
 					'width="100%" height="auto" controls="controls" type="video/mp4"></video>'
 			$("#videoremark").html(code)
 		},
@@ -67,9 +68,11 @@ $(function() {
 			if (data.indexOf("/") > -1){
 				$('#video').val(data);
 			var poster = $("#videoimage").val();
+				poster = !!poster ? (imgprefix + poster) : poster;
+			var imgprefix = "__PUBLIC__/Uploads"
 			var code = '<video class="lib-video" webkit-playsinline="webkit-playsinline" playsinline="playsinline" ' +
 					'poster="' + poster + '" ' +
-					'src="' + data + ' "' +
+					'src="' + (!!data ?(imgprefix+data):"") + ' "' +
 					'width="100%" height="auto" controls="controls" type="video/mp4"></video>';
 			$("#videoremark").html(code)
 		}

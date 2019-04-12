@@ -54,3 +54,16 @@ a:hover{text-decoration:underline}
   margin-left:10px;
 }
 
+.newbanner, .newmain{ height:auto; display:block;max-width:650px; margin:0 auto; overflow:hidden;}
+.newbanner{ height:auto; display:block; overflow:hidden;}
+.newflexslider{position:relative;height: auto;overflow:hidden;background:url(../loading.gif) 50% no-repeat; display:inline-block;}
+.newslides{position:relative;z-index:1;}
+.newslides li{height:auto; width:100%; text-align:center;}
+.newslides li img{ max-width: 100%;
+    margin: 0 auto;
+    max-height: 300px;}
+.flex-control-nav{position:absolute;bottom:5%;z-index:2;width:100%;text-align:center;}
+.flex-control-nav li{display:inline-block;width:10px;height:10px; margin:0 3px;}
+.flex-control-nav a{ background:#ccc; color:#ccc; border-radius:8px;display:inline-block;width:10px;height:10px;overflow:hidden;cursor:pointer; border:1px solid #fff;}
+.flex-control-nav .flex-active{ background:#fe9931; color:#fe9931;}
+

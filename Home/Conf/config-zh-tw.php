@@ -17,6 +17,10 @@ return array(
 		4=>array('name'=>'支付寶擔保交易','info'=>''),
 		5=>array('name'=>'二維碼支付','info'=>''),
 		6=>array('name'=>'銀行匯款','info'=>''),
+		7=>array('id'=>'7','name'=>'黑貓/新竹(貨到付款)','info'=>''),
+		8=>array('id'=>'8','name'=>'7-11超商取貨(貨到付款)','info'=>''),
+		9=>array('id'=>'9','name'=>'全家取貨(貨到付款)','info'=>''),
+		10=>array('id'=>'10','name'=>'Cash on delivery','info'=>'')
 	), 
 	'TEMPLATE_OPTIONS'=>array(
 		'price'=>array('name'=>'訂單價格','request'=>false, 'checked'=>true),
@@ -24,16 +28,16 @@ return array(
 		'quantity'=>array('name'=>'訂購數量','request'=>true,'checked'=>true),
 		'datetime'=>array('name'=>'選擇時間','request'=>true,'info'=>'請選擇時間', 'checked'=>true),
 		'name'=>array('name'=>'真實姓名','request'=>true,'info'=>'輸入您的姓名或稱呼','checked'=>true),
-		'mobile'=>array('name'=>'手機號碼','request'=>true,'info'=>'輸入您的手機號碼','checked'=>true),
+		'mobile'=>array('name'=>'聯絡號碼','request'=>true,'info'=>'輸入您的手機號碼或聯絡號碼','checked'=>true),
 		'phone'=>array('name'=>'聯系電話','request'=>false,'info'=>'輸入您的聯系電話','checked'=>true),
-		'region'=>array('name'=>'選擇地區','request'=>true,'checked'=>true),
+		'payment'=>array('name'=>'支付方式','request'=>true, 'checked'=>true),
+		'region'=>array('name'=>'選擇地區','request'=>false,'checked'=>false),
 		'address'=>array('name'=>'詳細地址','request'=>true,'info'=>'請填寫您的詳細地址','checked'=>true),
 		'zcode'=>array('name'=>'郵政編碼','request'=>false,'info'=>'請填寫郵政編碼','checked'=>false),
 		'qq'=>array('name'=>'QQ 號碼','request'=>true,'info'=>'請填寫QQ 號碼','checked'=>false),
 		'mail'=>array('name'=>'電子郵箱','request'=>true,'info'=>'請填寫您常用的電子郵箱','checked'=>false),
 		'remark'=>array('name'=>'留言備註','request'=>false,'info'=>'如果有額外需求請留言','checked'=>true),
 		'verify'=>array('name'=>'驗 證 碼','request'=>true,'info'=>'請填寫驗證碼','checked'=>true),
-		'payment'=>array('name'=>'支付方式','request'=>true, 'checked'=>true),
 	),
 );
 ?>

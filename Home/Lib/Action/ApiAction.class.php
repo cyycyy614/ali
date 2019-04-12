@@ -18,6 +18,7 @@ class ApiAction extends Action{
 
     public function aliziBooking(array $data){
         session_commit();
+//        var_dump($data);
         $sign = $this->auth($data);
         if($sign['status']==0) return $sign;
         $data['item_id']  = (int)$data['item_id'];
@@ -32,8 +33,12 @@ class ApiAction extends Action{
         if(json_decode($item['params'],true) && empty($data['item_params'])){
              return array('status'=>0,'message'=>lang('pleaseSelect_package'));
         }
+
+//        echo json_encode($item['extends']);
         
         $check = $this->aliziCheck($data,json_decode($item['extends'],true));
+        if($check['status']==0) return $check;
+        $check = $this->aliziCheckColor($data,json_decode($item['colors'],true));
         if($check['status']==0) return $check;
         $safe = $this->aliziSafe( $data['item_id'],$data['mobile']);
          if($safe['status']==0) return $safe;
@@ -118,8 +123,8 @@ class ApiAction extends Action{
 
     public function getAliziPayment($sn,$payment_id=''){
         $item = getCache('Item',array('sn'=>$sn));
-
         $payment = C('PAYMENT');
+
         $paymentInfo=array(
             1=>array( 'info'=> preg_replace('/\r\n/', '',nl2br($this->aliziConfig['payOnDelivery_info'])), 'math'=>'+'.$this->aliziConfig['payOnDelivery_fee'] ),
             2=>array('info'=> preg_replace('/\r\n/', '',nl2br($this->aliziConfig['alipay_discount_info'])),'math'=>'*'.$this->aliziConfig['alipay_discount'],),
@@ -310,9 +315,12 @@ class ApiAction extends Action{
         if(!empty($extends)){
             foreach($extends as $ext){
                 $key = $ext['title'];
-                if(empty($data['extends'][$key]))  return array('status'=>0,'message'=>lang($key.'_notEmpty'));
             }
+        }else{
+            return array('status'=>0,'message'=>lang("尺寸".'_notEmpty'));
         }
+
+
         foreach($options as $opt){
             $options_value = is_array($data[$opt])?implode(' ',$data[$opt]):$data[$opt];
             $data[$opt] = strip_tags(trim($options_value));
@@ -328,6 +336,15 @@ class ApiAction extends Action{
                 case 'address':  if(mb_strlen($value,'utf8')<3)   return array('status'=>0,'message'=>lang('invalid_'.$key)); break;
                 case 'verify':  if(md5($value)!=$_SESSION['verify'])   return array('status'=>0,'message'=>lang('invalid_'.$key)); break;
             }
+        }
+        return array('status'=>1);
+    }
+    private function aliziCheckColor(&$data,$colors){
+
+        if(!empty($colors)){
+
+        }else{
+            return array('status'=>0,'message'=>lang("顏色".'_notEmpty'));
         }
         return array('status'=>1);
     }

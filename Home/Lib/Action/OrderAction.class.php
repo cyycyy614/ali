@@ -15,6 +15,12 @@ class OrderAction extends AliziAction {
       $template['color'] = json_decode($template['color'],true);
       if(isset($_GET['theme'])) $template['template']=str_replace('-', '/', $_GET['theme']);
 
+        $pptimgs = $info['pptimgs'];
+        if(!!$pptimgs && count($pptimgs) > 0){
+            $pptlist = explode("#",$pptimgs);
+            $info["pptlist"]=$pptlist;
+        }
+
       if(!empty($template) && preg_match('/^(Alizi\/)/i', $template['template'])){
         $tplName = ltrim(strstr($template['template'],'/'),'/').'/';
         $tpl = ($tpl=='detail' && file_exists(TMPL_PATH.$template['template'].'/detail.html'))?'detail':'index';

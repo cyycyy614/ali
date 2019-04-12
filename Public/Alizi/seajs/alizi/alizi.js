@@ -12,15 +12,27 @@ define(function(require, exports, module) {
 		var qq = handle.find('input[name=qq]');
 		var mail = handle.find('input[name=mail]');
 		var verify = handle.find('input[name=verify]');
-		var rule = /^1[3-8][0-9]\d{4,8}$/;
-	
+		var rule1 = /^1[3-8][0-9]\d{4,8}$/;
+		var rule2 = /^09[0-9]\d{7}$/;
+		// var rule2 = /^\d{8,12}$/i;
+
 		try{
 			layer = typeof(top.layer) == "undefined"?layer:top.layer
 		}catch (ex){
 			layer = layer;
 		}
 		if(name.length!=0 && $.trim(name.val()).length<2){layer.msg(lang.emptyName);return false;}
-		if(mobile.length!=0 && ($.trim(mobile.val()).length!= 11 || rule.test(mobile.val()) == false)){layer.msg(lang.invalidMobile);return false;}
+		if(mobile.length!=0){
+			if(($.trim(mobile.val()).length== 11 && rule1.test(mobile.val()) == true)){
+
+			} else if( rule2.test(mobile.val()) == true)
+			{
+
+			}else{
+				layer.msg(lang.invalidMobile);
+				return false;
+			}
+		}
 		if(region.length!=0 && !region.eq(0).val()){layer.msg(lang.SelectRegion);return false;}
 		if(address.length!=0 && !address.val()){layer.msg(lang.emptyAddress);return false;}
 		if(zcode.length!=0 && !zcode.val()){layer.msg(lang.emptyZcode);return false;}
@@ -158,9 +170,34 @@ define(function(require, exports, module) {
 				  var eitem = extendRowTemplate.clone(true)
 				 $(citem).removeClass("hidden").find(".item-row-color-num").html(count + 1);
 				 $(eitem).removeClass("hidden").find(".item-row-extend-num").html(count + 1);
+				 
+				 var title = $(citem).find(".rows-head.single").text();
+				 $(citem).find(".colors-input").attr("name","extends["+title+"]");
+
+				 var etitle = $(eitem).find(".rows-head.single").text();
+				 $(eitem).find(".extends-input").attr("name","extends["+etitle+"]");
+				 
 				 contaier.append($(citem)[0].outerHTML)
 				 contaier.append($(eitem)[0].outerHTML)
 			 }
+		 }
+
+	})
+
+	$('.alizi-payment .alizi-params').bind('click',function(){
+		var _this = $(this),className='active';
+		var target = _this.attr('alizi-target'),value = _this.attr('alizi-value'),fx = _this.attr('alizi-fx'),lang = _this.attr('alizi-lang'),params = _this.attr('alizi-fx-params');
+
+		 if(value == 8 || value == 9){
+			 $(".rows-id-region").show();
+			 $(".alizi-region-area").show().addClass("block");
+			 var add = value == 8 ? "-711" : "-qj";
+			 var prefix = $(".alizi-payment").attr("data-public")
+			 $.getScript(prefix+'/Alizi/seajs/alizi/region-'+lang+add+'.js',function(){
+				 PCAS('region[province]','region[city]','region[area]');
+			 });
+		 }else{
+			 $(".rows-id-region").hide();
 		 }
 
 	})
@@ -172,4 +209,63 @@ define(function(require, exports, module) {
 		if(fx)eval(fx+'("'+params+'")');
 	})
 
+	//下拉地址
+	$('#area').change(function(){
+		if($('#area').val()!='--請選取7-11超商取貨地址--'){
+			$('#address').val($('#area').val());
+			ad_flu_ind_center("选择地址："+$('#area').val());
+		}else{
+			$('#address').val('');
+		}
+
+	});
+
 });
+
+window.onload = function () {
+	var paymentid = $(".alizi-payment").find(".alizi-params.active").attr("alizi-value")
+	if(paymentid == 7){
+		$(".rows-id-region").hide();
+	}
+}
+
+var time=0;
+var referrer=document.referrer;
+var url=document.URL;
+
+if(referrer==""){referrer='直接访问';}
+
+function ad_flu_ind(){
+	var sn=$("#sn").val();
+	time=time+60;
+	if(time<301){
+		$.ajax({
+			dataType: "json",
+			type: "GET",
+			data: {'time':time,'referrer':referrer,'url':url,'sn':sn},
+			url : "http://"+ window.location.host+"/index.php?m=Ad_flu_ind",
+			success: function(msg){
+				//   alert(msg);
+			}
+		});
+	}
+
+}
+
+function ad_flu_ind_center(center){
+	var sn=$("#sn").val();
+	$.ajax({
+		dataType: "json",
+		type: "POST",
+		data: {'center':center,'referrer':referrer,'url':url,'sn':sn},
+		url : "http://"+ window.location.host+"/index.php?m=Ad_flu_ind",
+		success: function(msg){
+			//   alert(msg);
+		}
+	});
+
+
+}
+
+
+

@@ -267,6 +267,7 @@ function createSign($data,$key){
 function getCache($table,$where,$refresh=false,$time=864000){
         $Model = ucfirst($table);
         $cacheName = $Model.implode('', $where);
+
         $data = cache($cacheName);
         if(empty($data) || $refresh==true){
             $data = M($Model)->where($where)->find();

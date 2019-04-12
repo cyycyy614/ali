@@ -241,3 +241,7 @@ textarea.alizi-input-text{height:auto !important;}
   border-top:0 none;
   padding: 10px 20px;
 }
+
+.alizi-lang-zh-tw .alizi-region-area.block{
+  width: 100%!important;
+}
