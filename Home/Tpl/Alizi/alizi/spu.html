@@ -27,16 +27,6 @@
 </block>
 <block name="body">
     <div class="wrapper alizi-detail-wrap">
-        <div class="header">
-            <div class="box-content alizi-detail-content">
-                <php>
-                    if(strstr($info['content'],'{[AliziOrder]}')){
-                    $aliziOrder = true;
-                    $info['content'] = str_replace('{[AliziOrder]}','',$info['content']);
-                    }
-                </php>
-            </div>
-        </div>
 
         <notempty name="aliziOrder">
             <div class="box">

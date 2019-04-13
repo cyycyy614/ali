@@ -11,7 +11,7 @@ a:hover{text-decoration:underline}
 .alizi-detail-content{padding:0 10px;}
 .alizi-page{padding:1px 0}
 .alizi-page img{max-width:100%;}
-.alizi-page .box{margin:15px 10px;padding:5px 0;background:#fff}
+.alizi-page .box{margin:0px 10px;padding:5px 0;background:#fff}
 .alizi-page .box a:hover{text-decoration:none}
 .alizi-page .box a:hover span{text-decoration:underline}
 .alizi-page .box a:hover .label{text-decoration:none}
@@ -37,6 +37,7 @@ a:hover{text-decoration:underline}
 .alizi-plug .timer .tt{padding-top:5px;color:#f00;}
 
 .alizi-content-title{padding:15px;border-bottom:1px solid #eee;}
+.alizi-content-title h1{font-size: 1.1rem;}
 .baoyou{ height:25px;line-height:25px; border-bottom:1px #eee solid;overflow:hidden; padding:10px 0 10px 10px;}
 .baoyou span{padding-left:22px; float:left; margin-right:5px; display:inline; font-size:13px;background-size:20px 20px;}
 .by{background:url(you.jpg) no-repeat left 1px;}
@@ -52,6 +53,74 @@ a:hover{text-decoration:underline}
 }
 .alizi-theme-thin  .rows-id-params .rows-params{
   margin-left:10px;
+}
+
+.service {  font-size: 0;    line-height: 40px;    border-top: 1px solid #ddd;      border-bottom: 1px solid #ccc;  padding: 0 3%;background:#fff; height:47px;    margin: 0px 10px;}
+.service .bb {  width: 33.33%;    float: left;}
+.service .cdeli {    text-align: center;}
+.service .shiwu {    text-align: right;}
+.service div span {    font-size: 13px;    background: url(icon.png) no-repeat;    background-size: 26px;    display: inline-block;    text-indent: 29px;}
+.service .fship span {    background-position: 0 -80px;}
+.service .shiwu span {    background-position: 0 -36px;}
+.service .cdeli span {    background-position: 0 9px;  }
+
+.sales {
+    width: 95%;
+    margin: 0 auto;
+    display: block;
+    color: #333;
+    position: relative;
+    padding: 0 0 10px 0;
+    border-radius: 0 28px 28px 0;
+}
+.sales .price {
+    font-size: 14px;
+    margin: 0 1%;
+    display: inline-block;
+}
+.sales .price ins {
+    font-size: 1.8rem;
+    margin-left: 4px;
+    font-weight: 600;
+}
+.sales .sales_info {
+    font-size: 12px;
+    display: inline-block;
+}
+.sales .sales_info .sales_num {
+    background: #49bde4;
+    padding: 2px 8px;
+    position: absolute;
+    right: 0;
+    top: 25%;
+    border-radius: 3px;
+    color: #fff;
+}
+.boom {
+    padding: 0 2.5% 4px 2.5%;
+    font-size: 13px;
+    color: #F00;
+}
+.buy_now {
+    width: 96%;
+    background: -webkit-linear-gradient(top,#343399,#3d71bd);
+    margin: 14px 2%;
+    text-align: center;
+}
+.buy_now a {
+    color: #fff;
+    font-size: 1.0rem;
+    padding: 8px 0;
+}
+
+@media screen and (min-width: 640px) {
+    footer{ left:50%; margin-left:-304px;}
+    .sales{ text-indent:6px; padding-top:0;}
+    .buy_now{ width:48%; margin:14px auto 8px auto;}
+    .submit button{ width:48%; margin:18px auto 0 auto;}
+    .top{ left:50%; margin-left:260px;}
+    .title h1{ line-height:46px; font-size:1.4rem; padding-top:10px;te}
+    .sales .price ins{ font-size:2.0rem;}
 }
 
 .newbanner, .newmain{ height:auto; display:block;max-width:650px; margin:0 auto; overflow:hidden;}

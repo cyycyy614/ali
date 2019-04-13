@@ -15,6 +15,7 @@ class OrderWidget extends Widget
 		if($aliziConfig['record_order']==1){ $cookie = cookie('order');$cookie['region'] = explode(' ', $cookie['region']);}
 		$cookie['ac']=cookie('ac');
 
+
 		if($page=='system'){
 			$template['options'] = $aliziConfig['order_options'];
 			$template['template'] = $aliziConfig['system_template'];
@@ -22,7 +23,7 @@ class OrderWidget extends Widget
 		}else{
 			$template = getCache('ItemTemplate',array('id'=>$info['id']),true);
 			if(empty($template))$template['options'] = $aliziConfig['order_options'];
-			$template['extend'] = json_decode($template['extend'],true);
+			$template['extend'] = unserialize($template['extend']);
 			$template['colors'] = json_decode($template['colors'],true);
 		}
 		if(!empty($request['template'])) $template = array_merge($template,$request['template']);
@@ -31,6 +32,7 @@ class OrderWidget extends Widget
 			'params'=>$Alizi->getItemParams($template['options'],$request['options']),
 			'product'=>json_decode($info['params'],true),
 			'extends'=>json_decode($info['extends'],true),
+			'extend'=>json_decode($template['extend'],true),
 			'colors'=>json_decode($info['colors'],true),
 			'payment'=>$Alizi->getAliziPayment($sn),
 			'aliziConfig'=>$aliziConfig,

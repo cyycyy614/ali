@@ -44,9 +44,11 @@ class OrderAction extends AliziAction {
         $template  = getCache('ItemTemplate',array('id'=>$info['id']),true);
 
         $template['extend'] = unserialize($template['extend']);
+
         $template['colors'] = json_decode($info['colors'],true);
         if(isset($_GET['theme'])) $template['template']=str_replace('-', '/', $_GET['theme']);
-
+      
+      
         if(!empty($template) && preg_match('/^(Alizi\/)/i', $template['template'])){
             $tplName = ltrim(strstr($template['template'],'/'),'/').'/';
             $tpl = ($tpl=='detail' && file_exists(TMPL_PATH.$template['template'].'/spu.html'))?'spu':'spu';
