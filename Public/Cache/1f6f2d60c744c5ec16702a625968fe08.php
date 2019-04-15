@@ -1,0 +1,3 @@
+<?php
+//000000864000a:10:{s:2:"id";s:2:"11";s:8:"template";s:4:"thin";s:7:"options";s:74:"["price","quantity","payment","name","mobile","region","address","remark"]";s:5:"width";s:5:"750px";s:11:"show_notice";s:1:"1";s:13:"show_comments";s:1:"0";s:4:"info";N;s:5:"color";s:132:"{"body_bg":"F1F1F1","form_bg":"FFFFFF","title_bg":"666666","button_bg":"EE3300","font":"333333","border":"666666","nav_bg":"EE3300"}";s:12:"redirect_uri";N;s:6:"extend";s:230:"a:3:{s:7:"padding";s:1:"0";s:10:"bottom_nav";s:1:"2";s:15:"bottom_nav_list";a:3:{i:0;s:58:"订单查询||http://localhost/ali/?m=Order&a=query||query";i:1;s:54:"立即下单||index.php?m=Order&id=836UkJrM&uid=||edit";i:2;s:0:"";}}";}
+?>

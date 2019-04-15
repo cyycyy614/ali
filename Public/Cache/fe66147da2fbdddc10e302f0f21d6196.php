@@ -1,0 +1,13 @@
+<?php
+//000000000000a:47:{s:2:"id";s:2:"13";s:7:"user_id";s:1:"1";s:2:"sn";s:8:"8XFHVRrq";s:11:"category_id";s:1:"1";s:4:"name";s:54:"【官方站】“澳洲第一神褲 YPL” 第六代 ";s:5:"brief";s:0:"";s:4:"tags";s:0:"";s:14:"original_price";s:7:"1288.00";s:5:"price";s:6:"481.00";s:7:"salenum";s:2:"12";s:10:"qrcode_pay";s:1:"0";s:15:"qrcode_pay_info";s:0:"";s:6:"qrcode";s:0:"";s:5:"image";s:25:"/201904/5cb2b810668a0.jpg";s:5:"thumb";s:25:"/201904/5cb2b810668a0.jpg";s:6:"status";s:1:"1";s:6:"is_hot";s:1:"0";s:6:"is_ppt";s:1:"0";s:6:"is_big";s:1:"0";s:10:"sort_order";s:1:"0";s:6:"params";s:138:"[{"title":"\u3010\u5169\u689d\/\u5747\u8ce3\uff1aNT$644\u3011\u73fe\u8ce3\uff1aNT$1288","price":"1288","cnum":"2","image":"","qrcode":""}]";s:11:"params_type";s:5:"radio";s:7:"options";N;s:7:"extends";s:185:"[{"title":"\u5c3a\u5bf8","value":"S\u7801\u3010\u662f\u662f\u662f\u3011#M\u7801\u3010\u641c\u7d22\u3011#L\u7801\u3010\u641c\u7d22\u3011#Xl\u7801\u3010\u641c\u7d22\u3011","type":"text"}]";s:7:"content";s:798:"<p>
+	{[AliziOrder]}
+	<p style="vertical-align:middle;font-family:&quot;background-color:#FFFFFF;text-align:center;font-size:19px;color:#333333;">
+		<span style="line-height:31.2px;font-size:24px;"><strong>簡單俐落剪裁 充滿現代知性美的你</strong></span>
+	</p>
+<p margin-left:17.9pt;"="" style="margin-top: 0px; margin-bottom: 0px; padding: 0px; vertical-align: middle; line-height: 2em; font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, &quot;Microsoft Yahei&quot;, serif; white-space: normal; background-color: rgb(255, 255, 255); text-align: center; font-size: 19px; color: rgb(51, 51, 51);"><span style="line-height:31.2px;font-size:24px;"><strong>更不容錯過這一款&nbsp; 回春捧杯內衣</strong></span>
+</p>
+<div>
+	<strong>订单</strong>
+</div>
+	</p>";s:7:"payment";s:13:"["7","8","9"]";s:11:"shipping_id";s:1:"0";s:6:"remark";s:0:"";s:9:"is_delete";s:1:"0";s:7:"is_sent";s:1:"0";s:12:"is_auto_send";s:1:"0";s:12:"send_content";s:0:"";s:8:"sms_send";s:4:"null";s:5:"timer";s:1:"0";s:11:"update_time";s:1:"0";s:8:"add_time";s:10:"1555216430";s:6:"colors";s:157:"[{"title":"\u9ed1\u8272","value":"\/201904\/5caf5d2920dc8.png","type":"image"},{"title":"\u7ea2\u8272","value":"\/201904\/5caf5c078cc58.png","type":"image"}]";s:7:"pptimgs";s:0:"";s:10:"videoimage";s:0:"";s:5:"video";s:0:"";s:11:"title_start";s:0:"";s:12:"title_remark";s:0:"";s:7:"account";s:0:"";s:5:"email";s:0:"";s:8:"facebook";s:0:"";s:11:"videoremark";s:0:"";s:9:"mealindex";s:1:"0";}
+?>

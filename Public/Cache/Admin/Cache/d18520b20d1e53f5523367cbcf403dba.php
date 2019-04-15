@@ -43,7 +43,7 @@
                             <td><input type="text" class="ui-text" size="2" name="sort_order[<?php echo ($vo["id"]); ?>]" value="<?php echo ($vo["sort_order"]); ?>"></td>
 							<td><?php echo ($vo["sn"]); ?></td>
                             <td>
-								<a href="<?php echo ($vo["url"]["url"]); ?>" target="_blank"><?php echo ($vo["name"]); ?></a>
+								<a href="<?php echo ($vo["url"]["detail"]); ?>" target="_blank"><?php echo ($vo["name"]); ?></a>
 								<?php if(!empty($vo["image"])): ?><a href="<?php echo (imageurl($vo["image"])); ?>" title="<?php echo lang('image');?>" target="_blank"><img src="__PUBLIC__/Assets/img/pic.jpg" /></a><?php endif; ?>
 								<?php if(($vo["is_hot"]) == "1"): ?><img src="__PUBLIC__/Assets/img/hot.gif" /><?php endif; ?>
 							</td>

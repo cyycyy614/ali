@@ -69,14 +69,12 @@ body{background-color:#<?php echo $color['body_bg']; ?>;}
 <?php if(!empty($aliziConfig["notice"])): ?><div class="aliziAlert"><a class="close" onclick="$('.aliziAlert').slideUp(500);">×</a><?php echo ($aliziConfig["notice"]); ?></div><?php endif; ?>
 
     <div class="wrapper alizi-detail-wrap">
-        <div class="header">
-            <div class="box-content alizi-detail-content">
-                <?php if(strstr($info['content'],'{[AliziOrder]}')){ $aliziOrder = true; $info['content'] = str_replace('{[AliziOrder]}','',$info['content']); } ?>
-            </div>
+        <div class="" data-key="{[AliziOrder]}">
+                              <?php $aliziOrder = true; if(strstr($info['content'],'{[AliziOrder]}')){ $aliziOrder = true; $info['content'] = str_replace('{[AliziOrder]}','',$info['content']); } ?>
+
         </div>
 
         <?php if(!empty($aliziOrder)): ?><div class="box">
-                <h2 class="title">订单信息</h2>
                 <div class="box-content">
                     <?php echo W('Order',array_merge($_GET,array('page'=>'single_detail','id'=>$info['sn']),$options));?>
                 </div>
@@ -108,8 +106,6 @@ seajs.use(['alizi'],function(alizi){
     
 <div class='alizi-remark'><?php echo ($info['remark']); ?></div>
 <div class="alizi-footer"><?php echo ($aliziConfig["footer"]); ?></div>
-<?php $showNav = (int)$template['extend']['bottom_nav']; if(!empty($showNav)){ if($showNav==1){ $style = "style='width:100%'"; }elseif($showNav==2){ $style = "style='width:49%'"; }else{ $style = '';} $html = '<div class="alizi-foot-nav"><a class="alizi-up" href="#">'.lang('top').'</a><ul>'; for($i=1;$i<=$showNav;$i++){ $nav = explode('||',$template['extend']['bottom_nav_list'][$i]); $class = isset($nav[2])?'icon '.$nav[2]:''; $html .= '<li class="foot-nav-'.$i.'" '.$style.'><a href="'.$nav[1].'"><strong class="'.$class.'">'.$nav[0].'</strong></a></li>'; } echo $html.'</ul></div>'; } ?>
-<?php if(isMobile() == false): ?><div id="qrcode"><div class="qrcode"><img src="<?php echo C('ALIZI_ROOT');?>Api/qrcode.php?margin=2&data=http://<?php echo ($_SERVER['HTTP_HOST']); echo (urlencode($_SERVER['REQUEST_URI'])); ?>"><span><?php echo lang('qrcodeAddress');?></span></div></div><?php endif; ?>
 
 <script type="text/javascript">
 seajs.use(['alizi','jquery/form','lang'],function(alizi){
@@ -140,19 +136,6 @@ seajs.use(['alizi','jquery/form','lang'],function(alizi){
 });
 </script>
     </div>
-    <?php if(isWeixin()): ?><script type="text/javascript">
-seajs.use(['jquery'], function($) {
-	$(function(){
-	  $('body').delegate('.alizi-btn-share','click',function(){
-		wxShare();
-	  })
-  })
-});
-function wxShare(){
-	window.location.href = "<?php echo U('Order/wx',array('id'=>$info['sn'],'uid'=>$_GET['uid'],'c'=>$_GET['c']));?>";
-}
-</script><?php endif; ?>
-
 
 
 

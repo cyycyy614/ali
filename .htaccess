@@ -10,8 +10,8 @@ RewriteRule ^article.html$ index.php?m=Index&a=article [L]
 RewriteRule ^article-([0-9]+).html$ index.php?m=Index&a=article&id=$1 [L]
 RewriteRule ^detail-([0-9]+).html$ index.php?m=Index&a=detail&id=$1 [L]
 
-RewriteRule ^single/(\w+).html$ index.php?m=Order&tpl=detail&id=$1 [L]
-RewriteRule ^single/(\w+)-([0-9]+).html$ index.php?m=Order&a=index&id=$1&uid=$2 [L]
+RewriteRule ^single/(\w+).html$ index.php?m=Order&tpl=detail&a=spu&id=$1 [L]
+RewriteRule ^single/(\w+)-([0-9]+).html$ index.php?m=Order&a=spu&id=$1&uid=$2 [L]
 RewriteRule ^detail/(\w+).html$ index.php?m=Order&a=index&tpl=detail&id=$1 [L]
 RewriteRule ^detail/(\w+)-([0-9]+).html$ index.php?m=Order&a=index&tpl=detail&id=$1&uid=$2 [L]
 

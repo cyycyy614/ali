@@ -4,7 +4,8 @@
 	  <dl>
 		<?php if(is_array($data["list"])): $i = 0; $__LIST__ = $data["list"];if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i; $type = $vo['is_hot']==1?'dt':'dd'; ?>
 		<<?php echo ($type); ?> class="alizi-item-list"> 
-			<a href="<?php echo U('Item/order',array('id'=>$vo['sn']));?>" title="<?php echo ($vo["name"]); ?>" class="info">
+			<!--<a href="<?php echo U('Order/index',array('id'=>$vo['sn'],'tpl'=>'detail','uid'=>$vo['account']));?>" title="<?php echo ($vo["name"]); ?>" class="info">-->
+			<a href="/detail/<?php echo ($vo['sn']); ?>-<?php echo ($vo['user_id']); ?>.html" title="<?php echo ($vo["name"]); ?>" class="info">
 				<div class="img"><img src="<?php if(empty($vo["thumb"])): echo (imageurl($vo["image"])); else: echo (imageurl($vo["thumb"])); endif; ?>" class="lazy" /></div>
 			</a>
 			<div class="clear"></div>

@@ -343,12 +343,14 @@ function upload(btn,input){
                             <th><?php echo lang('content_colon');?></th>
                             <td>
 								<div>
+									<?php
+ $htmlData = ''; if (!empty($info['content'])) { if (get_magic_quotes_gpc()) { $htmlData = stripslashes($_POST['content']); } else { $htmlData = $info['content']; } } ?>
 									<label class="alert">点击向内容框插入以下标签内容：</label>
 									<a href="javascript:;" onclick="setContent('{[AliziOrder]}','【订单标签】')">【订单标签】</a> 
 									<a href="javascript:;" onclick="setContent('<button type=\'button\' class=\'alizi-btn alizi-btn-share\'>立即分享</button>','【分享按钮】')">【分享按钮】</a>
 									<a href="javascript:;" onclick="insertHtml()">【插入代码】</a> 
 								</div>
-                            	<textarea name="content" id="content" class="input-textarea editor" cols="80" rows="6"><?php echo ($info["content"]); ?></textarea>
+                            	<textarea name="content" id="content" class="input-textarea editor" style="width: 900px; z-index: 999;height: 500px;" cols="80" rows="6"><?php echo htmlspecialchars($htmlData); ?></textarea>
                             </td>
                         </tr>
 						
@@ -393,7 +395,8 @@ function upload(btn,input){
 						<tr>
 							<th><?php echo lang('所属账户_colon');?></th>
 							<td>
-								<input name="account" type="text" class="ui-text" value="<?php echo ($info["account"]); ?>" size="80">
+								<input disabled type="text" class="ui-text" value="<?php echo ($info["accountname"]); ?>" size="80">
+								<input name="account" type="hidden" class="ui-text" value="<?php echo ($info["account"]); ?>" size="80">
 								<span class="ui-validityshower-info">（不能为空）</span>
 							</td>
 						</tr>
@@ -402,6 +405,14 @@ function upload(btn,input){
 							<th><?php echo lang('Facebook_colon');?></th>
 							<td>
 								<input name="facebook" type="text" class="ui-text" value="<?php echo ($info["facebook"]); ?>" size="80">
+								<span class="ui-validityshower-info">（不能为空）</span>
+							</td>
+						</tr>
+
+						<tr>
+							<th><?php echo lang('email_colon');?></th>
+							<td>
+								<input name="email" type="text" class="ui-text" value="<?php echo ($info["email"]); ?>" size="80">
 								<span class="ui-validityshower-info">（不能为空）</span>
 							</td>
 						</tr>
@@ -539,21 +550,52 @@ function shipping(id){
 	var url = "?m=Shipping&a=edit&page=2";
 	$.open(url,{title:'运费模板',width:680,height:250});
 }
-</script>     
-<link href="__PUBLIC__/Assets/js/umeditor/themes/default/css/umeditor.min.css" type="text/css" rel="stylesheet">
-<script type="text/javascript" charset="utf-8" src="__PUBLIC__/Assets/js/umeditor/umeditor.config.js"></script>
-<script type="text/javascript" charset="utf-8" src="__PUBLIC__/Assets/js/umeditor/umeditor.min.js"></script>
-<script type="text/javascript">  
-	UM.getEditor('content');
-	function setContent(content,info) {
-        UM.getEditor('content').execCommand('insertHtml', content);
-		$.alert(info+'添加成功',1);
-    }
-	function insertHtml() {
-        var value = prompt('插入HTML代码', '');
-		if(value){
-			setContent(value,'')
-		} 
-    }
-</script>       
+</script>
+	<link href="__PUBLIC__/Assets/js/kindeditor/themes/simple/simple.css" type="text/css" rel="stylesheet">
+	<link href="__PUBLIC__/Assets/js/kindeditor/plugins/code/prettify.css" type="text/css" rel="stylesheet">
+	<script type="text/javascript" charset="utf-8" src="__PUBLIC__/Assets/js/kindeditor/kindeditor-all-min.js"></script>
+	<script type="text/javascript" charset="utf-8" src="__PUBLIC__/Assets/js/kindeditor/plugins/code/prettify.js"></script>
+<!--<link href="__PUBLIC__/Assets/js/umeditor/themes/default/css/umeditor.min.css" type="text/css" rel="stylesheet">-->
+<!--<script type="text/javascript" charset="utf-8" src="__PUBLIC__/Assets/js/umeditor/umeditor.config.js"></script>-->
+<!--<script type="text/javascript" charset="utf-8" src="__PUBLIC__/Assets/js/umeditor/umeditor.min.js"></script>-->
+<script type="text/javascript">
+	KindEditor.ready(function(K) {
+		var editor1 = K.create('textarea[name="content"]', {
+			cssPath : '__PUBLIC__/Assets/js/kindeditor/plugins/code/prettify.css',
+			uploadJson : '__PUBLIC__/Assets/js/kindeditor/php/upload_json.php',
+			fileManagerJson : '__PUBLIC__/Assets/js/kindeditor/php/file_manager_json.php',
+			allowFileManager : true,
+			imageUploadLimit:2,
+			imageSizeLimit:'10MB',
+//			items : [
+//				'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
+//				'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+//				'insertunorderedlist', '|', 'emoticons', 'image', 'multiimage', 'link'],
+			afterCreate : function() {
+				var self = this;
+				K.ctrl(document, 13, function() {
+					self.sync();
+					K('form[name=example]')[0].submit();
+				});
+				K.ctrl(self.edit.doc, 13, function() {
+					self.sync();
+					K('form[name=example]')[0].submit();
+				});
+			}
+		});
+		prettyPrint();
+	});
+//	UM.getEditor('content');
+//	function setContent(content,info) {
+//        UM.getEditor('content').execCommand('insertHtml', content);
+//		$.alert(info+'添加成功',1);
+//    }
+//	function insertHtml() {
+//        var value = prompt('插入HTML代码', '');
+//		if(value){
+//			setContent(value,'')
+//		}
+//    }
+</script>
+
 <?php echo W("Foot");?>
