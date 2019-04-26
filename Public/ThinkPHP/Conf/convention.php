@@ -46,7 +46,7 @@ return  array(
     'DEFAULT_C_LAYER'       =>  'Action', // 默认的控制器层名称
     'DEFAULT_V_LAYER'       =>  'Tpl', // 默认的视图层名称
     'DEFAULT_APP'           => '@',     // 默认项目名称，@表示当前项目
-    'DEFAULT_LANG'          => 'zh-cn', // 默认语言
+    'DEFAULT_LANG'          => 'zh-tw', // 默认语言
     'DEFAULT_THEME'         => '',	// 默认模板主题名称
     'DEFAULT_GROUP'         => 'Home',  // 默认分组
     'DEFAULT_MODULE'        => 'Index', // 默认模块名称

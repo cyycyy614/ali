@@ -275,7 +275,7 @@ echo "<div class='alizi-order alizi-theme-".($template['template']?$template['te
 					switch ($key) {
 						case 'price':
 							echo "<span class='alizi-shipping' ".($info['shipping_id']?'':"style='display:none;'").">",
-								"<strong class='alizi-order-price'>0.00</strong>+<strong class='alizi-shipping-price'>0.00</strong>(".lang('shippingPrice').")=</span><strong class='alizi-total-price'>".($product?$product[0]['price']:$info['price'])."</strong>".lang('yuan').$vo['info'];
+								"<strong class='alizi-order-price'>0.00</strong>+<strong class='alizi-shipping-price'>0.00</strong>(".lang('shippingPrice').")=</span>".lang('symbol')."<strong class='alizi-total-price'>".($product?$product[0]['price']:$info['price'])."</strong>".$vo['info'];
 
 							echo "</div></div>";	
 							echo "</div><!--.alizi-box--><div class='alizi-box' id='alizi-box-2'><div><div>";
